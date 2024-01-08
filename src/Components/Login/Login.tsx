@@ -90,7 +90,7 @@ export default function Login({ saveAdminData }) {
                     label="Email Address"
                     type="email"
                     id="outlined-size-normal"
-                    placeholder="Please type here ..."
+                    placeholder="Enter your E-mail"
                     color="success"
                     focused
                     {...register("email", {
@@ -115,7 +115,7 @@ export default function Login({ saveAdminData }) {
                     label="Password"
                     type="password"
                     id="outlined-size-normal"
-                    placeholder="Please type here ..."
+                    placeholder="Enter your Password"
                     color="success"
                     focused
                     sx={{ mb: 1 }}

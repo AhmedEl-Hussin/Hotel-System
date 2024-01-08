@@ -1,6 +1,7 @@
+import React from 'react'
 
 export default function RestPassword() {
-    return (
-        <div>RestPassword</div>
-    )
+  return (
+    <div>RestPassword</div>
+  )
 }

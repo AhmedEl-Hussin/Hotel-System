@@ -1,13 +1,13 @@
 import { jwtDecode } from "jwt-decode";
 import { createContext, useEffect, useState } from "react";
 
-export let AuthContext = createContext(null);
+export const AuthContext = createContext(null);
 export default function AuthContextProvider(props) {
   const [userRole, setUserRole] = useState(null);
   // ******************* to baseUrl for apis *******************
   const baseUrl = `http://upskilling-egypt.com:3000/api/v0`;
   const requstHeaders = {
-    Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+    Authorization: `${localStorage.getItem("adminToken")}`,
   };
 
   // ******************* to decoded token *******************
@@ -16,11 +16,15 @@ export default function AuthContextProvider(props) {
   );
 
   const saveAdminData = () => {
+   
     const encodedToken = localStorage.getItem("adminToken");
     try {
       const decodedToken = jwtDecode(encodedToken);
-      setUserRole(decodedToken.userGroup);
       setAdminData(decodedToken);
+      setUserRole(decodedToken.userGroup);
+      
+    
+      
     } catch (error) {
       setAdminData(null);
     }
@@ -28,13 +32,13 @@ export default function AuthContextProvider(props) {
 
   useEffect(() => {
     if (localStorage.getItem("adminToken")) {
+     
       saveAdminData();
     }
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{ adminData, saveAdminData, userRole, baseUrl, requstHeaders }}
+    <AuthContext.Provider value={{ adminData, saveAdminData, userRole, baseUrl, requstHeaders }}
     >
       {props.children}
     </AuthContext.Provider>

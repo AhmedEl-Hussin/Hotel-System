@@ -31,17 +31,17 @@ export default function Login({ saveAdminData }) {
     formState: { errors },
   } = useForm<ILogin>();
   const [isLoading, setIsLoding] = useState(false);
-  const baseUrl = useContext(AuthContext);
+  const {baseUrl} = useContext(AuthContext);
   const theme = useTheme();
   // ****************** to login **********************
   const onSubmit = (data: ILogin) => {
     setIsLoding(true);
 
     axios
-      .post(`http://upskilling-egypt.com:3000/api/v0/admin/users/login`, data)
+      .post(`${baseUrl}/admin/users/login`, data)
 
       .then((response) => {
-        console.log(response);
+       
         navigate("/dashboard");
         toast.success("Successfully");
       })

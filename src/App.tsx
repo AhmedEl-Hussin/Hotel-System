@@ -10,17 +10,30 @@ import RequestResetPass from "./Components/RequestResetPass/RequestResetPass";
 import ForgotPass from "./Components/ForgotPass/ForgotPass";
 import ChangePassword from "./Components/ChangePassword/ChangePassword";
 import RestPassword from "./Components/RestPassword/RestPassword";
+import AuthContextProvider, { AuthContext } from "./Components/Context/AuthContext/AuthContext";
+import { useContext } from "react";
+import Users from "./Components/Users/Users";
+import Rooms from "./Components/Rooms/Rooms";
+import Ads from "./Components/Ads/Ads";
+import Bookings from "./Components/Bookings/Bookings";
 
 function App() {
+  let {adminData , saveAdminData} = useContext(AuthContext)
   const routes = createBrowserRouter([
     {
       path: "/dashboard",
-      element: <MasterLayout />,
+      element: <MasterLayout adminData = {adminData}  />,
 
       errorElement: <NotFound />,
       children: [
         { index: true, element: <Home /> },
         { path: "home", element: <Home /> },
+        { path: "users", element: <Users /> },
+        { path: "rooms", element: <Rooms /> },
+        { path: "ads", element: <Ads /> },
+        { path: "booking", element: <Bookings /> },
+        
+       
       ],
     },
     {
@@ -28,8 +41,8 @@ function App() {
       element: <AuthLayout />,
       errorElement: <NotFound />,
       children: [
-        { index: true, element: <Login /> },
-        { path: "/login", element: <Login /> },
+        { index: true, element: <Login  saveAdminData = {saveAdminData}/> },
+        { path: "/login", element: <Login saveAdminData = {saveAdminData} /> },
         { path: "/register", element: <Register /> },
         { path: "/request", element: <RequestResetPass /> },
         { path: "/forgot", element: <ForgotPass /> },
@@ -41,7 +54,9 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={routes} />
+   <AuthContextProvider>
+   <RouterProvider router={routes} />
+   </AuthContextProvider>
     </>
   );
 }

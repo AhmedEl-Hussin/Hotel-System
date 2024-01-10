@@ -7,7 +7,7 @@ import { AuthContext } from "../Context/AuthContext/AuthContext";
 
 
 
-export default function Ads() {
+export default function Ads({adminData}) {
   
     const {baseUrl , requstHeaders, userRole} : any = useContext(AuthContext);
     const [adsList , setAdsList] = useState([]);
@@ -35,6 +35,7 @@ export default function Ads() {
     })
     .then((response)=>{
     console.log(response);
+    console.log(adminData)
     
       setAdsList(response?.data)
       setArrayOfPages(

@@ -11,11 +11,10 @@ export default function AuthContextProvider(props) {
   };
 
   // ******************* to decoded token *******************
-  const [adminData, setAdminData] = useState(() =>
-    localStorage.getItem("adminToken")
-  );
+  const [adminData, setAdminData] = useState(() => localStorage.getItem("adminToken"));
 
   const saveAdminData = () => {
+    
    
     const encodedToken = localStorage.getItem("adminToken");
     try {
@@ -34,6 +33,8 @@ export default function AuthContextProvider(props) {
     if (localStorage.getItem("adminToken")) {
      
       saveAdminData();
+      console.log(adminData);
+      
     }
   }, []);
 

@@ -29,13 +29,16 @@ export default function ChangePassword({ saveAdminData }) {
     formState: { errors },
   } = useForm<IChange>();
   const [isLoading, setIsLoding] = useState(false);
-  const {baseUrl} = useContext(AuthContext);
+  const {baseUrl,requstHeaders} = useContext(AuthContext);
   const theme = useTheme();
   // ****************** to RestPassword **********************
   const onSubmit = (data: IChange) => {
     setIsLoding(true);
     axios
-      .post(`${baseUrl}/admin/users/change-password`, data)
+      .post(`${baseUrl}/admin/users/change-password`, data,
+      {
+        headers : requstHeaders
+      })
       .then((response) => {
        
         navigate("/login");
@@ -53,20 +56,20 @@ export default function ChangePassword({ saveAdminData }) {
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <CardContent sx={{ flex: "1 0 auto", marginLeft: 5 }}>
             <Typography
-              sx={{ mb: 1 }}
+              sx={{ mb: 1,  }}
               component="div"
               variant="h5"
               className="text"
             >
-              Stay<span className="text2">cation.</span>
+             <Link to="/login" className="underline" > Stay<span className="text2">cation.</span></Link>
             </Typography>
             <Box sx={{ marginLeft: 5, }}>
               <Typography variant="h3" component="div" sx={{ mb: 2 }}>
                Change Password
               </Typography>
               <Typography variant="h6" component="div" className="text3">
-                If you don’t have an account register <br />
-                You can <span>Login here !</span>
+                If you don’t have an account  <Link to="/register" className="underline" >register</Link>  <br />
+                You can  <Link to="/login" className="underline" ><span>Login here !</span></Link>
               </Typography>
               <FormControl
                 onSubmit={handleSubmit(onSubmit)}
@@ -79,7 +82,7 @@ export default function ChangePassword({ saveAdminData }) {
                   },
                 }}
                 noValidate
-                autoComplete="off"
+               
               >
                 <div>
                   <TextField

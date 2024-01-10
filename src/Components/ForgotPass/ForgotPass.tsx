@@ -13,7 +13,7 @@ import Photo from "../../assets/Group 3.png";
 import "../../App.scss";
 
 import TextField from "@mui/material/TextField";
-import {  useNavigate } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import { FormControl, Stack } from "@mui/material";
 import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext/AuthContext";
@@ -63,15 +63,15 @@ export default function ForgotPass({ saveAdminData }) {
               variant="h5"
               className="text"
             >
-              Stay<span className="text2">cation.</span>
+             <Link to="/login" className="underline" >  Stay<span className="text2">cation.</span></Link>
             </Typography>
             <Box sx={{ marginLeft: 5, mt: 5 }}>
               <Typography variant="h3" component="div" sx={{ mb: 3 }}>
               Forgot password
               </Typography>
               <Typography variant="h6" component="div" className="text3">
-              If you already have an account register <br />
-                You can <span>Login here !</span>
+              If you already have an account <Link to="/register" className="underline" >register</Link> <br />
+                You can <Link to="/login" className="underline" ><span>Login here !</span></Link> 
               </Typography>
               <FormControl
                 onSubmit={handleSubmit(onSubmit)}

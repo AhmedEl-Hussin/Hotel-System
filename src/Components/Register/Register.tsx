@@ -65,13 +65,14 @@ export default function Register({ saveAdminData }) {
             >
               Stay<span className="text2">cation.</span>
             </Typography>
+            
             <Box sx={{ marginLeft: 5, }}>
               <Typography variant="h3" component="div" sx={{ mb: 2 }}>
               Sign up
               </Typography>
               <Typography variant="h6" component="div" className="text3">
-                If you don’t have an account register <br />
-                You can <span>Login here !</span>
+                If you don’t have an account <Link to="/register" className="underline" > register </Link>  <br />
+                You can <Link to="/login" className="underline" >  <span>Login here !</span></Link>
               </Typography>
               <FormControl
                 onSubmit={handleSubmit(onSubmit)}
@@ -84,7 +85,7 @@ export default function Register({ saveAdminData }) {
                   },
                 }}
                 noValidate
-                autoComplete="off"
+               
               >
                 <div>
                   <TextField
@@ -109,7 +110,7 @@ export default function Register({ saveAdminData }) {
                 <div>
                   <TextField
                     label="Phone Number"
-                    type="number"
+                    type="text"
                     id="outlined-size-normal"
                     placeholder="Please type here ..."
                     color="primary"

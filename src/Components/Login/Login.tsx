@@ -69,8 +69,8 @@ export default function Login({ saveAdminData }) {
                 Sign in
               </Typography>
               <Typography variant="h6" component="div" className="text2">
-                If you don’t have an account register <br />
-                You can <span>Register here !</span>
+                If you don’t have an account <Link to="/register" className="underline" > register </Link>  <br />
+                You can <Link to="/register" className="underline" >  <span>Register here !</span></Link>
               </Typography>
               <FormControl
                 onSubmit={handleSubmit(onSubmit)}

@@ -19,11 +19,7 @@ import Bookings from "./Components/Bookings/Bookings";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 function App() {
-  const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
-  });
+
   
   let {adminData , saveAdminData} = useContext(AuthContext)
   const routes = createBrowserRouter([
@@ -61,14 +57,13 @@ function App() {
 
   return (
     <>
-     <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
+    
     
   
    <AuthContextProvider>
    <RouterProvider router={routes} />
    </AuthContextProvider>
-   </ThemeProvider>
+  
     </>
   );
 }

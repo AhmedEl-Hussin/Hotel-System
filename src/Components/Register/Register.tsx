@@ -97,6 +97,7 @@ export default function Register({ saveAdminData }) {
                   <span>Login here !</span>
                 </Link>
               </Typography>
+               {/* ************************* for Form ***************************** */}
               <FormControl
                 onSubmit={handleSubmit(onSubmit)}
                 component="form"
@@ -107,7 +108,7 @@ export default function Register({ saveAdminData }) {
                     height: "5ch",
                   },
                 }}
-                noValidate
+               
               >
                 {/* ************************* for input User Name ***************************** */}
                 <div>

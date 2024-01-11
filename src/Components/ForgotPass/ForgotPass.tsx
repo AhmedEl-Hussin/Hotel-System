@@ -6,14 +6,12 @@ import CardMedia from "@mui/material/CardMedia";
 
 import Typography from "@mui/material/Typography";
 
-
-
 import Button from "@mui/material/Button";
 import Photo from "../../assets/Group 3.png";
 import "../../App.scss";
 
 import TextField from "@mui/material/TextField";
-import {  Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FormControl, Stack } from "@mui/material";
 import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext/AuthContext";
@@ -23,7 +21,6 @@ import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 import { IForgot } from "./ForgotInterfaces/ForgotInterfaces";
 
-
 export default function ForgotPass({ saveAdminData }) {
   const navigate = useNavigate();
   const {
@@ -32,10 +29,10 @@ export default function ForgotPass({ saveAdminData }) {
     formState: { errors },
   } = useForm<IForgot>();
   const [isLoading, setIsLoding] = useState(false);
-  const {baseUrl} = useContext(AuthContext);
+  const { baseUrl } = useContext(AuthContext);
   const theme = useTheme();
   // ****************** to forgot-password **********************
-  const onSubmit = (data:IForgot) => {
+  const onSubmit = (data: IForgot) => {
     setIsLoding(true);
 
     axios
@@ -57,22 +54,34 @@ export default function ForgotPass({ saveAdminData }) {
       <Stack spacing={30} direction="row" justifyContent="center">
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <CardContent sx={{ flex: "1 0 auto", marginLeft: 5 }}>
+            {/* ************************* for Caption ***************************** */}
             <Typography
               sx={{ mb: 5 }}
               component="div"
               variant="h5"
               className="text"
             >
-             <Link to="/login" className="underline" >  Stay<span className="text2">cation.</span></Link>
+              <Link to="/login" className="underline">
+                {" "}
+                Stay<span className="text2">cation.</span>
+              </Link>
             </Typography>
             <Box sx={{ marginLeft: 5, mt: 5 }}>
               <Typography variant="h3" component="div" sx={{ mb: 3 }}>
-              Forgot password
+                Forgot password
               </Typography>
               <Typography variant="h6" component="div" className="text3">
-              If you already have an account <Link to="/register" className="underline" >register</Link> <br />
-                You can <Link to="/login" className="underline" ><span>Login here !</span></Link> 
+                If you already have an account{" "}
+                <Link to="/register" className="underline">
+                  register
+                </Link>{" "}
+                <br />
+                You can{" "}
+                <Link to="/login" className="underline">
+                  <span>Login here !</span>
+                </Link>
               </Typography>
+              {/* ************************* for Form ***************************** */}
               <FormControl
                 onSubmit={handleSubmit(onSubmit)}
                 component="form"
@@ -86,10 +95,10 @@ export default function ForgotPass({ saveAdminData }) {
                 noValidate
                 autoComplete="off"
               >
+                {/* ************************* for input Email ***************************** */}
                 <div>
                   <TextField
                     label="Email"
-                    
                     type="email"
                     id="outlined-size-normal"
                     placeholder="Please type here ..."
@@ -112,8 +121,8 @@ export default function ForgotPass({ saveAdminData }) {
                   </Box>
                 </div>
 
-             
-             
+                {/* ************************* for Button ***************************** */}
+
                 <Box sx={{ mt: 2 }}>
                   {isLoading ? (
                     <Button
@@ -142,7 +151,7 @@ export default function ForgotPass({ saveAdminData }) {
                       sx={{ width: "35ch", py: 1 }}
                       type="submit"
                     >
-                     Send mail
+                      Send mail
                     </Button>
                   )}
                 </Box>
@@ -150,7 +159,7 @@ export default function ForgotPass({ saveAdminData }) {
             </Box>
           </CardContent>
         </Box>
-
+        {/* ************************* for Image ***************************** */}
         <Box>
           <CardMedia
             component="img"

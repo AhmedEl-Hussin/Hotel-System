@@ -22,7 +22,7 @@ export default function AuthContextProvider(props) {
       const decodedToken = jwtDecode(encodedToken);
       setAdminData(decodedToken);
       setUserRole(decodedToken.userGroup);
-      
+     
     
       
     } catch (error) {
@@ -34,6 +34,8 @@ export default function AuthContextProvider(props) {
     if (localStorage.getItem("adminToken")) {
      
       saveAdminData();
+    
+      
     }
   }, []);
 

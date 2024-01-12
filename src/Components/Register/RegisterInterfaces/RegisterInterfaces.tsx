@@ -3,6 +3,9 @@ export interface IRest{
     email: string,
 password: string,
 confirmPassword: string,
-phoneNumber: number,
+phoneNumber: string,
 country:string,
+role:string,
+profileImage:string,
+
 }

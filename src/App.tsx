@@ -16,8 +16,11 @@ import Users from "./Components/Users/Users";
 import Rooms from "./Components/Rooms/Rooms";
 import Ads from "./Components/Ads/Ads";
 import Bookings from "./Components/Bookings/Bookings";
-
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 function App() {
+
+  
   let {adminData , saveAdminData} = useContext(AuthContext)
   const routes = createBrowserRouter([
     {
@@ -54,9 +57,13 @@ function App() {
 
   return (
     <>
+    
+    
+  
    <AuthContextProvider>
    <RouterProvider router={routes} />
    </AuthContextProvider>
+  
     </>
   );
 }

@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import NavBar from "../Shared/NavBar/NavBar";
+import NavBar from "../Shared/NavBar/NavBar"
 import Sidebar from "../Shared/Sidebar/Sidebar";
 import { Stack } from "@mui/material";
 

@@ -6,8 +6,6 @@ import CardMedia from "@mui/material/CardMedia";
 
 import Typography from "@mui/material/Typography";
 
-
-
 import Button from "@mui/material/Button";
 import Photo from "../../assets/Group 33.png";
 import "../../App.scss";
@@ -31,7 +29,7 @@ export default function Login({ saveAdminData }) {
     formState: { errors },
   } = useForm<ILogin>();
   const [isLoading, setIsLoding] = useState(false);
-  const {baseUrl} = useContext(AuthContext);
+  const { baseUrl } = useContext(AuthContext);
   const theme = useTheme();
   // ****************** to login **********************
   const onSubmit = (data: ILogin) => {
@@ -59,6 +57,7 @@ export default function Login({ saveAdminData }) {
       <Stack spacing={30} direction="row" justifyContent="center">
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <CardContent sx={{ flex: "1 0 auto", marginLeft: 5 }}>
+            {/* ************************* for Caption ***************************** */}
             <Typography
               sx={{ mb: 5 }}
               component="div"
@@ -72,8 +71,17 @@ export default function Login({ saveAdminData }) {
                 Sign in
               </Typography>
               <Typography variant="h6" component="div" className="text2">
-                If you don’t have an account register <br />
-                You can <span>Register here !</span>
+                If you don’t have an account{" "}
+                <Link to="/register" className="underline">
+                  {" "}
+                  register{" "}
+                </Link>{" "}
+                <br />
+                You can{" "}
+                <Link to="/register" className="underline">
+                  {" "}
+                  <span>Register here !</span>
+                </Link>
               </Typography>
               <FormControl
                 onSubmit={handleSubmit(onSubmit)}
@@ -86,8 +94,9 @@ export default function Login({ saveAdminData }) {
                   },
                 }}
                 noValidate
-                autoComplete="off"
+                
               >
+                {/* ************************* for input Email ***************************** */}
                 <div>
                   <TextField
                     label="Email Address"
@@ -112,7 +121,7 @@ export default function Login({ saveAdminData }) {
                     )}
                   </Box>
                 </div>
-
+                {/* ************************* for input Password ***************************** */}
                 <div>
                   <TextField
                     label="Password"
@@ -139,14 +148,20 @@ export default function Login({ saveAdminData }) {
                     )}
                   </Box>
                 </div>
-                <Typography
-                  variant="caption"
-                  sx={{ marginLeft: 5, paddingLeft: 5 }}
-                >
-                  <Link to="/forgot" className="underline">
-                    Forgot Password ?
-                  </Link>
-                </Typography>
+                {/* ************************* for Links (register-----forgot) ***************************** */}
+                <Stack spacing={15} direction="row" justifyContent="between">
+                  <Typography variant="caption">
+                    <Link to="/forgot" className="underline">
+                      Forgot Password ?
+                    </Link>
+                  </Typography>
+                  <Typography variant="caption">
+                    <Link to="/register" className="underline">
+                      Register
+                    </Link>
+                  </Typography>
+                </Stack>
+                {/* ************************* for Button ***************************** */}
                 <Box sx={{ mt: 2 }}>
                   {isLoading ? (
                     <Button
@@ -172,7 +187,7 @@ export default function Login({ saveAdminData }) {
                     <Button
                       variant="contained"
                       color="success"
-                      sx={{ width: "35ch", py: 1 }}
+                      sx={{ width: "36ch", py: 1 }}
                       type="submit"
                     >
                       login
@@ -183,7 +198,7 @@ export default function Login({ saveAdminData }) {
             </Box>
           </CardContent>
         </Box>
-
+        {/* ************************* for Image ***************************** */}
         <Box>
           <CardMedia
             component="img"

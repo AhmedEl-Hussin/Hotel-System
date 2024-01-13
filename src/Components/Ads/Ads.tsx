@@ -126,6 +126,7 @@ export default function Ads() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -171,6 +172,7 @@ export default function Ads() {
       .then((response) => {
         console.log(response?.data?.data?.ads);
         setAdsList(response?.data?.data?.ads);
+        console.log(ad)
         setArrayOfPages(
           Array(response?.data?.totalNumberOfPages)
             .fill()
@@ -184,6 +186,41 @@ export default function Ads() {
         setIsLoding(false);
       });
   };
+
+
+    // *************** to show update model ***************
+    const showUpdateModel = (ad) => {
+      console.log(ad);
+      
+      setItemId(ad?._id);
+      setValue("isActive", ad?.isActive);
+      setValue("discount", ad?.room?.discount);
+      setModelState("update-model");
+    };
+
+   // *************** to update Ads *****************
+   const updateAds = (data) => {
+    setIsLoding(true);
+    
+      axios
+        .put(`${baseUrl}/admin/ads/${itemId}`, data, {
+          headers:  requstHeaders,
+        })
+        .then((response) => {
+          
+          handleClose();
+          getAllAds();
+          toast.success("Task Updated Successfuly");
+        })
+        .catch((error) => {
+          toast.error(error?.response?.data?.message || "'Ads Not Updated'");
+        })
+        .finally(() => {
+          setIsLoding(false);
+        });
+    
+  };
+
   // *************** to get all Room *****************
 
   const getAllRoom = (pageNo) => {
@@ -240,11 +277,81 @@ export default function Ads() {
           </Button>
         </Box>
       </Modal>
+         {/* ************* this model to update Ads *********** */}
+
+         <Modal 
+        open={modelState === "update-model"}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+        <form
+            className="form w-100 m-auto mt-5"
+            onSubmit={handleSubmit(updateAds)}
+            as="form"
+          >
+                <Box>
+                      <Typography variant="h5" color="initial">
+                        Up date
+                      </Typography>
+                      <TextField
+                        sx={{ my: 3, color: "darkred" }}
+                        fullWidth
+                        id="outlined-select-currency"
+                        select
+                        label="Active"
+                        {...register("isActive", {
+                          required: true,
+                        })}
+                      >
+                        {currencies.map((option) => (
+                          <MenuItem key={option.value} value={option.value} selected={true} >
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Box>
+                    <Box>
+                      <TextField
+                        sx={{ my: 3 }}
+                        fullWidth
+                        id="outlined-primary"
+                        label="Discount"
+                        placeholder="Discount"
+                        {...register("discount", {
+                          required: true,
+                        })}
+                      />
+
+                      {errors.discount &&
+                        errors.discount.type === "required" && (
+                          <Box>Discount is required</Box>
+                        )}
+                    </Box>
+
+                    <Stack direction="row" spacing={30} sx={{ my: 5 }}>
+                     
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                      >
+                        Up date
+                      </Button>
+                    </Stack> 
+          </form>
+          
+        </Box>
+        
+           
+          
+      </Modal>
       
 
       {/* ****************************** for Table ************************ */}
-      <div>
-        <Stack direction="row" spacing={80} sx={{ my: 5, mx: 3 }}>
+      <div className="long">
+        <Stack direction="row" spacing={50} sx={{ my: 5 }} >
           <div>
             <Typography variant="h5" color="royalblue">
               ADS Table Details
@@ -371,24 +478,25 @@ export default function Ads() {
             </TableHead>
             <TableBody className="bg1">
               {adsList.map((ad) => (
+               
                 <StyledTableRow key={ad.id}>
                   <StyledTableCell component="th" scope="row" align="center">
-                    {ad.room.roomNumber}
+                    {ad?.room?.roomNumber}
                   </StyledTableCell>
 
                   <StyledTableCell component="th" scope="row" align="center">
-                    {ad.room.price}
+                    {ad?.room?.price}
                   </StyledTableCell>
 
                   <StyledTableCell component="th" scope="row" align="center">
-                    {ad.room.capacity}
+                    {ad?.room?.capacity}
                   </StyledTableCell>
 
                   <StyledTableCell component="th" scope="row" align="center">
-                    {ad.room.discount}
+                    {ad?.room?.discount}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row" align="center">
-                    {ad.isActive == true ? "Yes" : "No"}
+                    {ad?.isActive == true ? "Yes" : "No"}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row" align="center">
                     <span>
@@ -397,12 +505,13 @@ export default function Ads() {
                         onClick={() => showDeleteModel(ad?._id)}
                         color="error"
                       />{" "}
-                      <UpdateIcon sx={{ color: yellow[600] }} />{" "}
+                      <UpdateIcon  onClick={() => showUpdateModel(ad)} sx={{ color: yellow[600] }} />{" "}
                     </span>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
+            
           </Table>
         </TableContainer>
       </div>

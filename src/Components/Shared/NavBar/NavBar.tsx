@@ -22,7 +22,7 @@ export default function NavBar({ adminData }) {
             underline="hover"
           >
             {" "}
-            Booking
+            Booking.
           </Link>
 
           <Typography variant="" color="initial" sx={{ mr: 4 }}>

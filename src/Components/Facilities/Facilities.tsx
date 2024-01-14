@@ -41,6 +41,10 @@ export default function Facilities(props) {
     p: 4,
   };
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setModalState("close");
+
 
   //***********************table consts************* */
 

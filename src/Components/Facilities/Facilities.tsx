@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -19,11 +19,13 @@ import ModeEditOutlineTwoToneIcon from "@mui/icons-material/ModeEditOutlineTwoTo
 import AddFacility from "./addFacility";
 import EditFacility from "./editFacility";
 import DeleteFacility from "./deleteFacility";
+import { AuthContext } from "../Context/AuthContext/AuthContext";
 
 export default function Facilities(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [id, setId] = useState(null);
     const [facility, setFacility] = useState(null);
+    const { baseUrl,requstHeaders } = useContext(AuthContext);
 
 
      //***********************modal consts************* */
@@ -69,10 +71,7 @@ export default function Facilities(props) {
   }));
 
   const [facilitiesList, setFacilitiesList] = useState([]);
-  const requstHeaders = {
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NThhMTgyYjQ3ZWUyYjE0Zjk1NDY5OTAiLCJyb2xlIjoiYWRtaW4iLCJ2ZXJpZmllZCI6ZmFsc2UsImlhdCI6MTcwNDU4MjM5MiwiZXhwIjoxNzA1NzkxOTkyfQ.sVBY0wSo0_XUvxXi3E2DTyt0Lc1Efeax-ddoyxIJ1uU",
-  };
+  
 
 
    //**********************to get all Facilities************** */
@@ -82,7 +81,7 @@ export default function Facilities(props) {
 
     axios
       .get(
-        "http://upskilling-egypt.com:3000/api/v0/admin/room-facilities",
+        `${baseUrl}/api/v0/admin/room-facilities`,
         {
           headers: requstHeaders,
         }

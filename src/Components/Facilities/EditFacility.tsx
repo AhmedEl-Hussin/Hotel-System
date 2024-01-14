@@ -2,9 +2,11 @@ import { Button, Stack, TextField, Typography } from '@mui/material'
 import axios from 'axios';
 import { useForm } from "react-hook-form";
 import { RotatingLines } from 'react-loader-spinner';
+import { AuthContext } from '../Context/AuthContext/AuthContext';
+import { useContext } from 'react';
 
-export default function EditFacility({facility , id, getAllFacilities, handleClose, requstHeaders, setIsLoading,isLoading }) {
-    
+export default function EditFacility({facility , id, getAllFacilities, handleClose, setIsLoading,isLoading }) {
+    const { baseUrl,requstHeaders } = useContext(AuthContext);
     const {
         register,
         handleSubmit,
@@ -15,7 +17,7 @@ export default function EditFacility({facility , id, getAllFacilities, handleClo
     const EditFacility = (data) => {
         setValue("name",facility?.name)
         setIsLoading(true);
-        axios.put(`http://upskilling-egypt.com:3000/api/v0/admin/room-facilities/${id}`, data, {
+        axios.put(`${baseUrl}/api/v0/admin/room-facilities/${id}`, data, {
             headers: requstHeaders,
         })
             .then((res) => {

@@ -2,13 +2,15 @@ import { Button, Typography } from "@mui/material";
 import email from '../../assets/email.png'
 import { RotatingLines } from "react-loader-spinner";
 import axios from "axios";
+import { AuthContext } from "../Context/AuthContext/AuthContext";
+import { useContext } from "react";
 
-export default function DeleteFacility({ id, getAllFacilities, handleClose, requstHeaders, setIsLoading, isLoading }) {
-
+export default function DeleteFacility({ id, getAllFacilities, handleClose, setIsLoading, isLoading }) {
+    const { baseUrl,requstHeaders } = useContext(AuthContext);
     const deleteFacilityItem = () => {
         console.log("delete");
         setIsLoading(true);
-        axios.delete(`http://upskilling-egypt.com:3000/api/v0/admin/room-facilities/${id}`, {
+        axios.delete(`${baseUrl}/api/v0/admin/room-facilities/${id}`, {
             headers: requstHeaders,
         })
             .then((res) => {

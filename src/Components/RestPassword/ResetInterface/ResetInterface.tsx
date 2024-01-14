@@ -1,6 +1,6 @@
-export interface IRest{
+export interface IRest {
     email: string,
-password: string,
-confirmPassword: string,
-seed: string,
+    password: string,
+    confirmPassword: string,
+    seed: string,
 }

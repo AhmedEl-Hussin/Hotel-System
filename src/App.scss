@@ -1,71 +1,85 @@
-$logoColor1:#3252DF;
-$titleColor:#152C5B;
-$textColor:#EB5148;
+//****************************************Shared********************************************************************//
+$logoColor1: #3252df;
+$titleColor: #152c5b;
+$textColor: #eb5148;
 
-//*****************login*****************//
-.text{
-    color:$logoColor1 ;
-    span{
-        color:$titleColor ;
-    }
-}
-.text2{
-   span{
+//*****************login*********************************************************************************************//
+.text {
+  color: $logoColor1;
+  span {
     color: $titleColor;
-} 
+  }
+}
+.text2 {
+  span {
+    color: $titleColor;
+  }
 }
 
-.underline{
-    text-decoration: none;
-   
-
+.underline {
+  text-decoration: none;
 }
 
-//*****************forgot*****************//
-.text3{
-   
-    span{
-        color:$textColor;
-    }
+//*****************forgot***********************************************************************************************//
+.text3 {
+  span {
+    color: $textColor;
+  }
 }
-//*****************login*****************//
-.underLine{
-    text-decoration: none;
+//*****************login************************************************************************************************//
+.underLine {
+  text-decoration: none;
 }
-//*****************change-password*****************//
-.style{
-margin-top: 40px;
-margin-left: 40px;
-padding-left: 40px;
-    text-align: end;
-   font-size:x-large;
-}
-
-.css-1s2a0jz-MuiTableCell-root{
-    background-color: $logoColor1;
-   
+//*****************change-password**************************************************************************************//
+.style {
+  margin-top: 40px;
+  margin-left: 40px;
+  padding-left: 40px;
+  text-align: end;
+  font-size: x-large;
 }
 
-//*****************ads*****************//
-.bg{
-    background-image: url(./assets/images.jpg);
-    background-repeat: no-repeat;
-    background-size:100% 100%;
-   
-    
+.css-1s2a0jz-MuiTableCell-root {
+  background-color: $logoColor1;
 }
-.bg1{
-    background-color:rgba(119, 152, 163, 0.6);
-   border-radius: 20px;
-   
+
+//*****************     Ads     ******************************************************************************************//
+.bg {
+  background-image: url(./assets/images.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
-.bg2{
-    background-image: url(./assets/see.jpg);
-    background-repeat: no-repeat;
-    background-size:100% 100%;
-    border-radius: 20px;
-   
+.bg1 {
+  background-color: rgba(119, 152, 163, 0.5);
+  border-radius: 20px;
 }
-.long{
-    width: 800px;
+.bg2 {
+  background-image: url(./assets/see.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border-radius: 20px;
+}
+.bg5 {
+  background-image: url(./assets/السياحة_في_مصر.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.long {
+  width: 75%;
+  margin: auto;
+}
+.bg3 {
+  background-color: rgba(231, 239, 241, 0.6);
+  border-radius: 20px;
+}
+
+.bord {
+  border-radius: 20px;
+}
+.bg4 {
+  background-color: #3252df !important;
+  color: antiquewhite;
+}
+.bg6 {
+  background-color: #eb5148;
 }

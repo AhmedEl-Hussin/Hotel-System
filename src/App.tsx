@@ -10,22 +10,25 @@ import RequestResetPass from "./Components/RequestResetPass/RequestResetPass";
 import ForgotPass from "./Components/ForgotPass/ForgotPass";
 import ChangePassword from "./Components/ChangePassword/ChangePassword";
 import RestPassword from "./Components/RestPassword/RestPassword";
-import AuthContextProvider, { AuthContext } from "./Components/Context/AuthContext/AuthContext";
+import AuthContextProvider, {
+  AuthContext,
+} from "./Components/Context/AuthContext/AuthContext";
 import { useContext } from "react";
 import Users from "./Components/Users/Users";
 import Rooms from "./Components/Rooms/Rooms";
 import Ads from "./Components/Ads/Ads";
+import AddNewAds from "./Components/AddNewAds/AddNewAds";
 import Bookings from "./Components/Bookings/Bookings";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-function App() {
 
-  
-  let {adminData , saveAdminData} = useContext(AuthContext)
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ToastContainer } from "react-toastify";
+function App() {
+  let { adminData, saveAdminData } = useContext(AuthContext);
   const routes = createBrowserRouter([
     {
       path: "/dashboard",
-      element: <MasterLayout adminData = {adminData}  />,
+      element: <MasterLayout adminData={adminData} />,
 
       errorElement: <NotFound />,
       children: [
@@ -35,8 +38,7 @@ function App() {
         { path: "rooms", element: <Rooms /> },
         { path: "ads", element: <Ads /> },
         { path: "booking", element: <Bookings /> },
-        
-       
+        { path: "new", element: <AddNewAds /> },
       ],
     },
     {
@@ -44,8 +46,8 @@ function App() {
       element: <AuthLayout />,
       errorElement: <NotFound />,
       children: [
-        { index: true, element: <Login  saveAdminData = {saveAdminData}/> },
-        { path: "/login", element: <Login saveAdminData = {saveAdminData} /> },
+        { index: true, element: <Login saveAdminData={saveAdminData} /> },
+        { path: "/login", element: <Login saveAdminData={saveAdminData} /> },
         { path: "/register", element: <Register /> },
         { path: "/request", element: <RequestResetPass /> },
         { path: "/forgot", element: <ForgotPass /> },
@@ -57,13 +59,9 @@ function App() {
 
   return (
     <>
-    
-    
-  
-   <AuthContextProvider>
-   <RouterProvider router={routes} />
-   </AuthContextProvider>
-  
+      <AuthContextProvider>
+        <RouterProvider router={routes} />
+      </AuthContextProvider>
     </>
   );
 }

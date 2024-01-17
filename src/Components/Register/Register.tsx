@@ -1,15 +1,11 @@
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-
 import Typography from "@mui/material/Typography";
-
 import Button from "@mui/material/Button";
 import Photo from "../../assets/Group (1).png";
 import "../../App.scss";
-
 import TextField from "@mui/material/TextField";
 import { Link, useNavigate } from "react-router-dom";
 import { FormControl, Stack } from "@mui/material";
@@ -32,9 +28,9 @@ export default function Register({ saveAdminData }) {
   const [isLoading, setIsLoding] = useState(false);
   const { baseUrl, userRole } = useContext(AuthContext);
   const theme = useTheme();
-  // ****************** to register **********************
+
+  // ****************** to register *************************************************************************************************
   const onSubmit = (data: IRest) => {
-   
     const formData = new FormData();
     formData.append("userName", data["userName"]);
     formData.append("phoneNumber",data["phoneNumber"]);
@@ -70,7 +66,7 @@ export default function Register({ saveAdminData }) {
       <Stack spacing={30} direction="row" justifyContent="center">
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <CardContent sx={{ flex: "1 0 auto", marginLeft: 5 }}>
-            {/* ************************* for  caption ***************************** */}
+            {/* ************************* for  caption ************************************************************************ */}
             <Typography
               sx={{ mb: 1 }}
               component="div"
@@ -303,7 +299,7 @@ export default function Register({ saveAdminData }) {
             </Box>
           </CardContent>
         </Box>
-        {/* ************************* for input Img ***************************** */}
+        {/* ************************* for input Img *************************************************************************** */}
         <Box>
           <CardMedia
             component="img"

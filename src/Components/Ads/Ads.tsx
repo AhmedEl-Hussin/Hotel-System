@@ -17,7 +17,9 @@ import {
   Button,
   MenuItem,
   Modal,
+  Select,
   Stack,
+  TablePagination,
   TextField,
   Typography,
 } from "@mui/material";
@@ -50,6 +52,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import noData from "../../assets/Email.png";
+import { Link } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -60,16 +63,16 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const currencies = [
-  {
-    value: "true",
-    label: "true",
-  },
-  {
-    value: "false",
-    label: "false",
-  },
-];
+// const currencies = [
+//   {
+//     value: "true",
+//     label: "true",
+//   },
+//   {
+//     value: "false",
+//     label: "false",
+//   },
+// ];
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -77,12 +80,19 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+
   boxShadow: 24,
   p: 4,
 };
 
 export default function Ads() {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({ defaultValues: { isActive: "true" } });
+
   const handleOpen = () => setOpen(true);
 
   const [open, setOpen] = React.useState(false);
@@ -97,12 +107,51 @@ export default function Ads() {
   };
   const [itemId, setItemId] = useState(0);
   const [modelState, setModelState] = useState("colse");
+  const { baseUrl, requstHeaders, userRole }: any = useContext(AuthContext);
+
+  const [adsList, setAdsList] = useState([]);
+  const [isLoding, setIsLoding] = useState(false);
+
+  const [userDetails, setUserDetails] = useState([]);
+  const [active, setActive] = useState("");
+  const handleChange = (event) => {
+    setActive(event.target.value);
+  };
+
+  // ********************pagination**************************************************************************************
+
+  const [arrayOfPages, setArrayOfPages] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const handleChangePage = (event, newPage) => {
+    setCurrentPage(newPage + 1);
+    getAllAds(newPage + 1);
+  };
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setCurrentPage(1);
+    getAllAds(1);
+  };
   // *************** to show delete model ***************
   const showDeleteModel = (id) => {
     setItemId(id);
     setModelState("delete-model");
   };
-  //*************** to delete Task *****************
+  // *************** to get user details *****************
+  const getAdsDetails = (itemId) => {
+    axios
+      .get(`${baseUrl}/admin/ads${itemId}`, {
+        headers: requstHeaders,
+      })
+      .then((response) => {
+        console.log(response?.data);
+      })
+      .catch((error) => {
+        error(error?.response?.data?.message || "Not Found Tag Ids");
+      });
+  };
+
+  //*************** to delete Task *******************************************************************************************
   const deleteTask = () => {
     setIsLoding(true);
 
@@ -123,125 +172,30 @@ export default function Ads() {
       });
   };
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm();
-
-  const { baseUrl, requstHeaders, userRole }: any = useContext(AuthContext);
-  const [roomsList, setRoomsList] = useState([]);
-  const [adsList, setAdsList] = useState([]);
-  const [isLoding, setIsLoding] = useState(false);
-  const [arrayOfPages, setArrayOfPages] = useState([]);
-  // ****************** to add new Ads **********************
-  const onSubmit = (data) => {
+  // *************** to get all Ads ******************************************************************************************
+  const getAllAds = (page?: number) => {
     setIsLoding(true);
 
     axios
-      .post(`${baseUrl}/admin/ads`, data, {
-        headers: requstHeaders,
-      })
-      .then((response) => {
-        getAllAds();
-        toast.success(response?.data?.message || "Added Successfully");
-        handleClose();
-      })
-      .catch((error) => {
-        toast.error(error?.response?.data?.message || "Data of task invaild");
-      })
-      .finally(() => {
-        setIsLoding(false);
-      });
-  };
-
-  // *************** to get all Ads *****************
-  const getAllAds = () => {
-    setIsLoding(true);
-    // if (userRole=='Manager') {
-    //   user='manager'
-
-    // } else {
-    //   user='employee'
-    // }
-    axios
-      .get(`${baseUrl}/admin/ads`, {
-        headers: requstHeaders,
-      })
-      .then((response) => {
-        console.log(response?.data?.data?.ads);
-        setAdsList(response?.data?.data?.ads);
-        console.log(ad)
-        setArrayOfPages(
-          Array(response?.data?.totalNumberOfPages)
-            .fill()
-            .map((_, i) => i + 1)
-        );
-      })
-      .catch((error) => {
-        toast.error(error?.response?.data?.message || "Something went Wrong");
-      })
-      .finally(() => {
-        setIsLoding(false);
-      });
-  };
-
-
-    // *************** to show update model ***************
-    const showUpdateModel = (ad) => {
-      console.log(ad);
-      
-      setItemId(ad?._id);
-      setValue("isActive", ad?.isActive);
-      setValue("discount", ad?.room?.discount);
-      setModelState("update-model");
-    };
-
-   // *************** to update Ads *****************
-   const updateAds = (data) => {
-    setIsLoding(true);
-    
-      axios
-        .put(`${baseUrl}/admin/ads/${itemId}`, data, {
-          headers:  requstHeaders,
-        })
-        .then((response) => {
-          
-          handleClose();
-          getAllAds();
-          toast.success("Task Updated Successfuly");
-        })
-        .catch((error) => {
-          toast.error(error?.response?.data?.message || "'Ads Not Updated'");
-        })
-        .finally(() => {
-          setIsLoding(false);
-        });
-    
-  };
-
-  // *************** to get all Room *****************
-
-  const getAllRoom = (pageNo) => {
-    setIsLoding(true);
-
-    axios
-      .get(`${baseUrl}/admin/rooms?page=1&size=10`, {
+      .get(`${baseUrl}/admin/ads?page=1&size=10`, {
         headers: requstHeaders,
         params: {
-          pageSize: 10,
-          pageNumber: pageNo,
+          size: rowsPerPage,
+          page: page,
         },
       })
       .then((response) => {
-        console.log(response?.data?.data?.rooms);
-        setRoomsList(response?.data?.data?.rooms);
+        console.log(response?.data?.data);
+        setAdsList(response?.data?.data?.ads);
+
         setArrayOfPages(
-          Array(response?.data?.totalNumberOfPages)
+          Array(response?.data?.data?.totalCount)
             .fill()
             .map((_, i) => i + 1)
         );
+
+        setCurrentPage(page);
+      
       })
       .catch((error) => {
         toast.error(error?.response?.data?.message || "Something went Wrong");
@@ -250,23 +204,102 @@ export default function Ads() {
         setIsLoding(false);
       });
   };
+
+  // *************** to show update model *********************************************************************************
+  const showUpdateModel = (ad) => {
+    setItemId(ad?._id);
+    setValue("isActive", ad?.isActive ? "yes" : "no");
+    setValue("discount", ad?.room?.discount);
+    setModelState("update-model");
+  };
+
+  // *************** to update Ads ****************************************************************************************
+  const updateAds = (data) => {
+    data.isActive = active === "yes";
+    axios
+      .put(`${baseUrl}/admin/ads/${itemId}`, data, {
+        headers: requstHeaders,
+      })
+      .then((response) => {
+        console.log(response);
+
+        handleClose();
+        getAllAds();
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.message || "'Ads Not Updated'");
+      })
+      .finally(() => {
+        setIsLoding(false);
+      });
+  };
+
+  // *************** to view detail of booking *****************
+  const showViewModel = (id) => {
+    setItemId(id);
+    setModelState("view-model");
+    getUserDetails(id);
+  };
+
+  // *************** to get booking details *****************
+  const getUserDetails = (id) => {
+    axios
+      .get(`${baseUrl}/admin/ads/${itemId} `, {
+        headers: requstHeaders,
+      })
+      .then((response) => {
+        console.log(response?.data?.data.ads);
+
+        setUserDetails(response?.data?.data?.ads);
+      })
+      .catch((error) => {
+        error(error?.response || "Not Found Tag Ids");
+      });
+  };
+
   useEffect(() => {
-    getAllAds(userRole);
-    getAllRoom(userRole);
+    getAllAds(1);
+
   }, []);
 
   return (
     <>
-      {/* ************* this model to delete Ads *********** */}
-
-      <Modal 
+      {/* ************* this model to view booking ***************************************************************** */}
+      <Modal
+        open={modelState === "view-model"}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Stack sx={style} className="bord bg4">
+          <Typography id="modal-modal-description" sx={{ mb: 2 }} color="gold">
+            <Typography variant="h6">
+              <span>Room Number : </span> {userDetails?.room?.roomNumber}
+            </Typography>
+            <Typography variant="h6">
+              <span>Price : </span> {userDetails?.room?.price}
+            </Typography>
+            <Typography variant="h6">
+              <span>Capacity : </span> {userDetails?.room?.capacity}
+            </Typography>
+            <Typography variant="h6">
+              <span>Discount : </span> {userDetails?.room?.discount}
+            </Typography>
+          </Typography>
+        </Stack>
+      </Modal>
+      {/* ************* this model to delete Ads *************************************************************** */}
+      <Modal
         open={modelState === "delete-model"}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <img src={noData} alt="no data" />
+        <Stack sx={style} className="bord ">
+          <Typography variant="body1" color="initial" margin="auto">
+            {" "}
+            <img src={noData} alt="no data" />
+          </Typography>
           <Typography id="modal-modal-description" sx={{ mb: 2 }} color="error">
             are you sure you want to delete this item ? if you are sure just{" "}
             <br /> click on delete it
@@ -275,194 +308,88 @@ export default function Ads() {
             {" "}
             delete
           </Button>
-        </Box>
+        </Stack>
       </Modal>
-         {/* ************* this model to update Ads *********** */}
 
-         <Modal 
+      {/* ************* this model to update Ads *************************************************************** */}
+      <Modal
         open={modelState === "update-model"}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-        <form
-            className="form w-100 m-auto mt-5"
+        <Stack sx={style} className="bord ">
+          <form
+            className="form w-100 m-auto mt-5 "
             onSubmit={handleSubmit(updateAds)}
-            as="form"
           >
-                <Box>
-                      <Typography variant="h5" color="initial">
-                        Up date
-                      </Typography>
-                      <TextField
-                        sx={{ my: 3, color: "darkred" }}
-                        fullWidth
-                        id="outlined-select-currency"
-                        select
-                        label="Active"
-                        {...register("isActive", {
-                          required: true,
-                        })}
-                      >
-                        {currencies.map((option) => (
-                          <MenuItem key={option.value} value={option.value} selected={true} >
-                            {option.label}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Box>
-                    <Box>
-                      <TextField
-                        sx={{ my: 3 }}
-                        fullWidth
-                        id="outlined-primary"
-                        label="Discount"
-                        placeholder="Discount"
-                        {...register("discount", {
-                          required: true,
-                        })}
-                      />
+            <Box>
+              <Typography variant="h5" color="blue" sx={{ mb: 3 }}>
+                Up date
+              </Typography>
 
-                      {errors.discount &&
-                        errors.discount.type === "required" && (
-                          <Box>Discount is required</Box>
-                        )}
-                    </Box>
+              <Select
+                {...register("isActive", { required: true })}
+                fullWidth
+                labelId="active"
+                id="active"
+                color="primary"
+                placeholder="Active"
+                value={active}
+                label="Active"
+                onChange={handleChange}
+              >
+                <MenuItem value="yes">Yes</MenuItem>
+                <MenuItem value="no">No</MenuItem>
+              </Select>
+            </Box>
+            <Box>
+              <TextField
+                sx={{ my: 3 }}
+                fullWidth
+                id="outlined-primary"
+                label="Discount"
+                placeholder="Discount"
+                {...register("discount", {
+                  required: true,
+                })}
+              />
 
-                    <Stack direction="row" spacing={30} sx={{ my: 5 }}>
-                     
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                      >
-                        Up date
-                      </Button>
-                    </Stack> 
+              {errors.discount && errors.discount.type === "required" && (
+                <Box>Discount is required</Box>
+              )}
+            </Box>
+
+            <Stack direction="row" spacing={30} sx={{ my: 5 }}>
+              <Button type="submit" variant="contained" color="primary">
+                Up date
+              </Button>
+            </Stack>
           </form>
-          
-        </Box>
-        
-           
-          
+        </Stack>
       </Modal>
-      
+      {/* ************* for Table ****************************************************************************** */}
+      <Stack direction="row" spacing={90} sx={{ my: 5 }}>
+        <div>
+          <Typography variant="h5" color="royalblue" sx={{ ml: 3 }}>
+            ADS Table Details
+          </Typography>
+          <Typography variant="body2" color="slateblue" sx={{ ml: 3 }}>
+            You can check all details
+          </Typography>
+        </div>
 
-      {/* ****************************** for Table ************************ */}
-      <div className="long">
-        <Stack direction="row" spacing={50} sx={{ my: 5 }} >
-          <div>
-            <Typography variant="h5" color="royalblue">
-              ADS Table Details
-            </Typography>
-            <Typography variant="body2" color="slateblue">
-              You can check all details
-            </Typography>
-          </div>
-
+        <Link to="/dashboard/new">
           <Button variant="contained" onClick={handleClickOpen}>
             Add New Ads
           </Button>
-          <Dialog
-            sx={{ width: "400" }}
-            open={open}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            aria-describedby="alert-dialog-slide-description"
-          >
-            <div className="bg2">
-              <DialogContent className="bg1 ">
-                <DialogContentText id="alert-dialog-slide-description">
-                  {/* **************** to view form ****************** */}
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    {/* ************** for name input *************** */}
+        </Link>
+      </Stack>
 
-                    <Box>
-                      <Typography variant="h5" color="initial">
-                        Ads
-                      </Typography>
-                      <TextField
-                        sx={{ my: 3, color: "darkred" }}
-                        fullWidth
-                        id="outlined-select-currency"
-                        select
-                        label="Active"
-                        {...register("isActive", {
-                          required: true,
-                        })}
-                      >
-                        {currencies.map((option) => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Box>
-                    <Box>
-                      <TextField
-                        sx={{ my: 3 }}
-                        fullWidth
-                        id="outlined-primary"
-                        label="Discount"
-                        placeholder="Discount"
-                        {...register("discount", {
-                          required: true,
-                        })}
-                      />
-
-                      {errors.discount &&
-                        errors.discount.type === "required" && (
-                          <Box>Discount is required</Box>
-                        )}
-                    </Box>
-
-                    <Box>
-                      <TextField
-                        fullWidth
-                        sx={{ my: 3 }}
-                        id="outlined-select-currency"
-                        select
-                        label="RoomNumber"
-                        {...register("room", {
-                          required: true,
-                        })}
-                      >
-                        {roomsList.map((room) => (
-                          <MenuItem key={room._id} value={room._id}>
-                            {room.roomNumber}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Box>
-
-                    <Stack direction="row" spacing={30} sx={{ my: 5 }}>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        onClick={handleClose}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        onClick={handleSubmit(onSubmit)}
-                        variant="contained"
-                        color="primary"
-                      >
-                        Add
-                      </Button>
-                    </Stack>
-                  </form>
-                </DialogContentText>
-              </DialogContent>
-            </div>
-          </Dialog>
-        </Stack>
-
+      <Box>
         <TableContainer component={Paper} sx={{ backgroundColor: "silver" }}>
           <Table
-            sx={{ minWidth: 400 }}
+            sx={{ minWidth: 800, alignContent: "start" }}
             aria-label="customized table"
             className="bg"
           >
@@ -476,10 +403,10 @@ export default function Ads() {
                 <StyledTableCell align="center">Action</StyledTableCell>
               </TableRow>
             </TableHead>
+
             <TableBody className="bg1">
-              {adsList.map((ad) => (
-               
-                <StyledTableRow key={ad.id}>
+              {adsList.map((ad, index) => (
+                <StyledTableRow key={index}>
                   <StyledTableCell component="th" scope="row" align="center">
                     {ad?.room?.roomNumber}
                   </StyledTableCell>
@@ -496,25 +423,41 @@ export default function Ads() {
                     {ad?.room?.discount}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row" align="center">
-                    {ad?.isActive == true ? "Yes" : "No"}
+                    {ad?.isActive ? "Yes" : "No"}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row" align="center">
                     <span>
-                      <RemoveRedEyeIcon sx={{ color: grey[300] }} />{" "}
+                      <RemoveRedEyeIcon
+                        onClick={() => showViewModel(ad?._id)}
+                        sx={{ color: yellow[600] }}
+                      />{" "}
                       <DeleteForeverIcon
                         onClick={() => showDeleteModel(ad?._id)}
                         color="error"
                       />{" "}
-                      <UpdateIcon  onClick={() => showUpdateModel(ad)} sx={{ color: yellow[600] }} />{" "}
+                      <UpdateIcon
+                        onClick={() => showUpdateModel(ad)}
+                        sx={{ color: grey[300] }}
+                      />{" "}
                     </span>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
-            
           </Table>
+        <Stack sx={{bgcolor:"cornflowerblue"}}>
+        <TablePagination 
+            rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+            colSpan={6}
+            count={arrayOfPages.length} // Update this line
+            rowsPerPage={rowsPerPage}
+            page={currentPage - 1}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Stack>
         </TableContainer>
-      </div>
+      </Box>
     </>
   );
 }

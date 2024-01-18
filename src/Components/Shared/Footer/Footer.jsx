@@ -1,4 +1,4 @@
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
@@ -8,9 +8,9 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <>
-      <Stack sx={{ flexGrow: 1 }} bgcolor= "cornflowerblue">
-        <Grid container spacing={3} sx={{py:3}} justifyContent="center">
-          <Grid item xs={2}>
+      <Stack  sx={{ flexGrow: 1 }} bgcolor= "teal" >
+        <Grid container spacing={2} sx={{py:3,px:5 }} justifyContent="center" >
+          <Grid item xs={3} >
            
                   {/* ************************* for Caption ***************************** */}
             <Typography
@@ -25,7 +25,7 @@ export default function Footer() {
             <Typography variant="body1" color="InactiveCaption">We kaboom your beauty holiday <br /> instantly and memorable.</Typography>
           </Grid>
             {/* ************************* for Caption2 ***************************** */}
-          <Grid item xs={3}>
+          <Grid item xs={3} >
             <Typography
               sx={{ mb: 1 }}
               component="div"
@@ -35,11 +35,11 @@ export default function Footer() {
               For Beginners
             </Typography>
             <Typography variant="body1" color="InactiveCaption">New Account</Typography>
-            <Typography variant="body1" color="InactiveCaption">Start Booking a Room</Typography>
+            <Typography variant="body1" color="InactiveCaption" sx={{my:1}}>Start Booking a Room</Typography>
             <Typography variant="body1" color="InactiveCaption">Use Payments</Typography>
           </Grid>
             {/* ************************* for Caption2 ***************************** */}
-          <Grid item xs={3}>
+          <Grid item xs={3} >
             <Typography
               sx={{ mb: 1 }}
               component="div"
@@ -67,7 +67,12 @@ export default function Footer() {
             <Typography variant="body1" color="InactiveCaption">Staycation, Kemang, Jakarta</Typography>
           </Grid>
          
+          <Grid item xs={8} textAlign="center" sx={{px:5 }}>
         
+          
+            <Typography variant="h6" color="InactiveCaption">Copyright 2019 • All rights reserved • Staycation</Typography>
+          </Grid>
+         
         
         </Grid>
       </Stack>

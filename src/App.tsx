@@ -29,7 +29,7 @@ function App() {
         { index: true, element: <Home /> },
         { path: "home", element: <Home /> },
         { path: "users", element: <Users /> },
-        { path: "rooms", element: <Rooms /> },
+        { path: "rooms", element: <Rooms saveAdminData = {saveAdminData} /> },
         { path: "ads", element: <Ads /> },
         { path: "booking", element: <Bookings /> },
         

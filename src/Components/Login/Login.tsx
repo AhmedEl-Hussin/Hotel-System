@@ -39,6 +39,10 @@ export default function Login({ saveAdminData }) {
       .post(`${baseUrl}/admin/users/login`, data)
 
       .then((response) => {
+        console.log(response);
+        localStorage.setItem('adminToken', response?.data?.data?.token);
+        
+        saveAdminData()
         navigate("/dashboard");
         toast.success("Successfully");
       })

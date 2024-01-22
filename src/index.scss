@@ -1,0 +1,85 @@
+.css-1wvnaxz-MuiTableCell-root {
+    &.MuiTableCell-head {
+      background-color: #e2e5eb !important;
+      color: #1f263e !important;
+      font-weight: 700 !important;
+      font-size: 16px !important;
+    }
+  }
+  .css-1nslmh4-MuiTableCell-root {
+    &.MuiTableCell-head {
+      background-color: #e2e5eb !important;
+      color: #1f263e !important;
+    }
+  }
+  .css-mnhre6-MuiButtonBase-root-MuiButton-root:hover {
+    background-color: rgba(0, 0, 255, 0.678) !important;
+  }
+  
+  .loaderContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+  }
+  
+  :focus-visible {
+    outline: -webkit-focus-ring-color auto 0px;
+  }
+  .modalSpan{
+    font-weight: 600 !important;
+  }
+  .css-1cbbo0i-MuiButtonBase-root-MuiButton-root{
+  
+   background-color: #203FC7 !important;
+    color: white !important;
+  }
+  .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop{
+    -webkit-align-items: center !important;
+  }
+  .submitButton{
+    height:40px !important;
+  }
+  .css-1j1tcvq-MuiButtonBase-root-MuiButton-root{
+    background-color: #203FC7 !important;
+    color: white !important;
+    width: 100% !important;
+  
+  }
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+    padding: 5px !important;
+  }
+  .css-1v3tj8f-MuiStack-root{
+  padding-top: 7 !important;
+  padding-bottom: 7 !important;
+  }
+  .css-1u3bzj6-MuiFormControl-root-MuiTextField-root{
+    background-color: #F7F7F7 !important;
+  }
+  .css-1rxj01-MuiButtonBase-root-MuiButton-root {
+    background-color: #203FC7 !important;
+    color: white !important;
+    margin-top: 25px !important;
+  }   
+  .css-108v3ka{
+    border-radius: 15px !important;
+    -webkit-border-radius: 15px !important;
+    -moz-border-radius: 15px !important;
+    -ms-border-radius: 15px !important;
+    -o-border-radius: 15px !important;
+   }
+  
+   .imgContainer{
+    position: relative;
+    overflow: hidden;
+   }
+  
+   .layOver{
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    right: 0%;
+    left: 0%;
+    background-color:rgba(62, 62, 177, 0.384);
+   }
+  

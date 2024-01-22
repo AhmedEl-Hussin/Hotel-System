@@ -81,7 +81,7 @@ export default function Facilities(props) {
 
     axios
       .get(
-        `${baseUrl}/api/v0/admin/room-facilities`,
+        `${baseUrl}/admin/room-facilities`,
         {
           headers: requstHeaders,
         }

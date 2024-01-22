@@ -16,6 +16,7 @@ import Users from "./Components/Users/Users";
 import Rooms from "./Components/Rooms/Rooms";
 import Ads from "./Components/Ads/Ads";
 import Bookings from "./Components/Bookings/Bookings";
+import Facilities from "./Components/Facilities/Facilities";
 
 function App() {
   let {adminData , saveAdminData} = useContext(AuthContext)
@@ -32,6 +33,7 @@ function App() {
         { path: "rooms", element: <Rooms /> },
         { path: "ads", element: <Ads /> },
         { path: "booking", element: <Bookings /> },
+        { path: "facilities", element: <Facilities /> },
         
        
       ],

@@ -25,8 +25,8 @@ export default function NavBar({ adminData }) {
             Booking.
           </Link>
 
-          <Typography variant="" color="initial" sx={{ mr: 4 }}>
-            {adminData.userName}
+          <Typography  color="initial" sx={{ mr: 4 }}>
+            {adminData?.userName}
           </Typography>
           <Stack direction="row" spacing={2}>
             <Avatar

@@ -1,7 +1,7 @@
 $logoColor1:#3252DF;
 $titleColor:#152C5B;
 $textColor:#EB5148;
-
+$text7Color: #1ABC9C;
 //*****************login*****************//
 .text{
     color:$logoColor1 ;
@@ -39,4 +39,30 @@ margin-left: 40px;
 padding-left: 40px;
     text-align: end;
    font-size:x-large;
+}
+// **********************Deatails*********************//
+.text7{
+    color:$text7Color;
+    
+}
+.text8{
+    color: $titleColor;
+}
+.bg5{
+ background-color: $textColor;
+ border-radius: 5px;
+ color: #fff;
+}
+.bg6{
+ background-color: $text7Color;
+ border-radius: 5px;
+ color: #fff;
+}
+.bg7{
+ background-color: $titleColor;
+ border-radius: 5px;
+ color: #fff;
+}
+.bg11{
+   background-color:  #f1f2f4;
 }

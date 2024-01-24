@@ -12,7 +12,7 @@ export default function MasterLayout({adminData}) {
  
        <>
        <NavBar adminData = {adminData} />
-       <Stack spacing={30} direction="row" justifyContent="center">
+       <Stack spacing={2} direction="row" justifyContent="center">
            <Sidebar/>
          <Outlet/>
          </Stack>

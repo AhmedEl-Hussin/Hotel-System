@@ -1,6 +1,10 @@
+import StaticImages from "../StaticImages/StaticImages";
 
 export default function LandingPage() {
-    return (
-        <div>LandingPage</div>
+    return (<>
+    <StaticImages />
+    
+    </>
+        
     )
 }

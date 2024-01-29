@@ -16,6 +16,7 @@ import Users from "./Components/Users/Users";
 import Rooms from "./Components/Rooms/Rooms";
 import Ads from "./Components/Ads/Ads";
 import Bookings from "./Components/Bookings/Bookings";
+import LandingPage from "./Components/Landing-Page/LandingPage";
 
 function App() {
   let {adminData , saveAdminData} = useContext(AuthContext)
@@ -49,6 +50,12 @@ function App() {
         { path: "/change-pass", element: <ChangePassword /> },
         { path: "/rest-pass", element: <RestPassword /> },
       ],
+    },
+    {
+      path: "/landingPage",
+      element: <LandingPage />,
+      errorElement: <NotFound />,
+
     },
   ]);
 

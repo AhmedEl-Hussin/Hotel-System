@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Card,
   List,
   ListItem,
   ListItemButton,
@@ -19,7 +20,7 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 
-const currencies = [
+const options = [
   {
     value: "true",
     label: "true",
@@ -58,7 +59,7 @@ export default function AddNewAds() {
         navigate("/dashboard/ads");
       })
       .catch((error) => {
-        toast.error(error?.response?.data?.message || "Data of task invaild");
+        toast.error(error?.response?.data?.message || "wrong");
       })
       .finally(() => {
         setIsLoding(false);
@@ -99,7 +100,7 @@ export default function AddNewAds() {
   }, []);
   return (
     <>
-      <Stack className="bg5">
+      <Stack >
         <List sx={{ width: "25%" }}>
           <ListItem disablePadding sx={{ mt: 1 }}>
             <ListItemButton
@@ -114,9 +115,9 @@ export default function AddNewAds() {
             </ListItemButton>
           </ListItem>
         </List>
-        <Stack
-          sx={{ width: "75%", margin: "auto", mt: 1, mb: 2 }}
-          className="bg3"
+        <Card
+          sx={{ width: "75%", margin: "auto", mt: 1, mb: 2  }}
+          className="bg1"
         >
           <form onSubmit={handleSubmit(onSubmit)} className="long">
             {/* ************** for name input *************** */}
@@ -124,7 +125,7 @@ export default function AddNewAds() {
             <Box>
               <Typography
                 variant="h5"
-                color="initial"
+                color="inherit"
                 textAlign="center"
                 sx={{ mt: 3 }}
               >
@@ -140,12 +141,18 @@ export default function AddNewAds() {
                   required: true,
                 })}
               >
-                {currencies.map((option) => (
+                
+                {options.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
                 ))}
+             
               </TextField>
+
+              {errors.isActive && errors.isActive.type === "required" && (
+                <Typography color="red" >isActive is required</Typography>
+              )}
             </Box>
             <Box>
               <TextField
@@ -160,7 +167,7 @@ export default function AddNewAds() {
               />
 
               {errors.discount && errors.discount.type === "required" && (
-                <Box>Discount is required</Box>
+                <Typography color="red">Discount is required</Typography>
               )}
             </Box>
 
@@ -175,12 +182,17 @@ export default function AddNewAds() {
                   required: true,
                 })}
               >
+                  
                 {roomsList.map((room) => (
                   <MenuItem key={room._id} value={room._id}>
                     {room.roomNumber}
                   </MenuItem>
                 ))}
+                
               </TextField>
+              {errors.room && errors.room.type === "required" && (
+                <Typography color="red">Room is required</Typography>
+              )}
             </Box>
 
             <Button
@@ -193,7 +205,7 @@ export default function AddNewAds() {
               Add
             </Button>
           </form>
-        </Stack>
+        </Card>
       </Stack>
     </>
   );

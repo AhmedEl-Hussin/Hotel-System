@@ -95,7 +95,7 @@ export default function Bookings() {
         },
       })
       .then((response) => {
-        // console.log(response?.data?.data);
+        console.log(response?.data?.data);
     
 
         setBookingList(response?.data?.data?.booking);
@@ -116,14 +116,16 @@ export default function Bookings() {
   // *************** to view detail of booking *****************
   const showViewModel = (id) => {
     setItemId(id);
+
     setModelState("view-model");
     getUserDetails(id);
+    // alert(id)
   };
 
   // *************** to get booking details *****************
   const getUserDetails = (id) => {
     axios
-      .get(`${baseUrl}/admin/booking/${itemId}`, {
+      .get(`${baseUrl}/admin/booking/${id}`, {
         headers: requstHeaders,
       })
       .then((response) => {
@@ -138,6 +140,7 @@ export default function Bookings() {
 
   useEffect(() => {
     getAllBooking(userRole);
+    getUserDetails(itemId)
   }, []);
 
   return (
@@ -146,19 +149,17 @@ export default function Bookings() {
       <Modal
         open={modelState === "view-model"}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+       
       >
         <Stack sx={style} className="bord bg4">
-          <Typography id="modal-modal-description" sx={{ mb: 2 }} color="gold">
+          <Typography id="modal-modal-description" sx={{ mb: 2 }} >
             {/* <Typography variant="h6" color="yellow"><span>Start Date : </span>{userDetails.startDate.slice( 0 , 10)}</Typography> */}
-            <Typography variant="h6" color="yellow">
-              <span>Status : </span>
-              {userDetails.status}
+            <Typography variant="h6" sx={{py:2}} >
+              Status :  {userDetails.status}
             </Typography>
-            <Typography variant="h6" color="yellow">
-              <span>Price : </span>
-              {userDetails.totalPrice}
+            <Typography variant="h6" >
+              Price :    {userDetails.totalPrice}
+           
             </Typography>
             {/* <Typography variant="h6" color="yellow"><span>End Date : </span>{userDetails.endDate.slice( 0 , 10)}</Typography> */}
           </Typography>

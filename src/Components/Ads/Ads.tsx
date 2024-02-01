@@ -27,7 +27,9 @@ import {
 import { useForm } from "react-hook-form";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import UpdateIcon from "@mui/icons-material/Update";
+import EditIcon from '@mui/icons-material/Edit';
+
+import Photo from "../../assets/R.png"
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -52,7 +54,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import noData from "../../assets/Email.png";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -137,17 +139,17 @@ export default function Ads() {
     setItemId(id);
     setModelState("delete-model");
   };
-  // *************** to get user details *****************
-  const getAdsDetails = (itemId) => {
+  // *************** to get  details *****************
+  const getAdsDetails = (id)=> {
     axios
-      .get(`${baseUrl}/admin/ads${itemId}`, {
+      .get(`${baseUrl}/admin/ads/${id}`, {
         headers: requstHeaders,
       })
       .then((response) => {
-        console.log(response?.data);
+        // console.log(response?.data);
       })
       .catch((error) => {
-        error(error?.response?.data?.message || "Not Found Tag Ids");
+        error(error?.response?.data?.message || "Not Found ");
       });
   };
 
@@ -195,7 +197,6 @@ export default function Ads() {
         );
 
         setCurrentPage(page);
-      
       })
       .catch((error) => {
         toast.error(error?.response?.data?.message || "Something went Wrong");
@@ -241,10 +242,10 @@ export default function Ads() {
     getUserDetails(id);
   };
 
-  // *************** to get booking details *****************
+  // *************** to get ads details *****************
   const getUserDetails = (id) => {
     axios
-      .get(`${baseUrl}/admin/ads/${itemId} `, {
+      .get(`${baseUrl}/admin/ads/${id} `, {
         headers: requstHeaders,
       })
       .then((response) => {
@@ -259,7 +260,7 @@ export default function Ads() {
 
   useEffect(() => {
     getAllAds(1);
-
+    getAdsDetails(itemId)
   }, []);
 
   return (
@@ -271,8 +272,12 @@ export default function Ads() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Stack sx={style} className="bord bg4">
-          <Typography id="modal-modal-description" sx={{ mb: 2 }} color="gold">
+        <Stack sx={style} className="bord bg4" >
+        
+          <Typography id="modal-modal-description" sx={{ mb: 2 }} >
+          {userDetails?.room?.images[0]?(
+                    <img className="img"  src={userDetails?.room?.images[0]} alt="imageRoom" />):(<img className="img"  src={Photo} alt="noData" />)
+                  }
             <Typography variant="h6">
               <span>Room Number : </span> {userDetails?.room?.roomNumber}
             </Typography>
@@ -379,23 +384,24 @@ export default function Ads() {
           </Typography>
         </div>
 
-        <Link to="/dashboard/new">
-          <Button variant="contained" onClick={handleClickOpen}>
+        <Link to="/dashboard/add-new-add">
+          <Button variant="contained" onClick={handleClickOpen} >
             Add New Ads
           </Button>
         </Link>
       </Stack>
 
       <Box>
-        <TableContainer component={Paper} sx={{ backgroundColor: "silver" }}>
+        <TableContainer component={Paper} >
           <Table
             sx={{ minWidth: 800, alignContent: "start" }}
             aria-label="customized table"
-            className="bg"
+            
           >
-            <TableHead className="ll">
+            <TableHead >
               <TableRow>
                 <StyledTableCell align="center">Room Number</StyledTableCell>
+                <StyledTableCell align="center">Image</StyledTableCell>
                 <StyledTableCell align="center">Price</StyledTableCell>
                 <StyledTableCell align="center">Capacity</StyledTableCell>
                 <StyledTableCell align="center">Discount</StyledTableCell>
@@ -404,11 +410,16 @@ export default function Ads() {
               </TableRow>
             </TableHead>
 
-            <TableBody className="bg1">
+            <TableBody >
               {adsList.map((ad, index) => (
                 <StyledTableRow key={index}>
                   <StyledTableCell component="th" scope="row" align="center">
                     {ad?.room?.roomNumber}
+                  </StyledTableCell>
+                  <StyledTableCell sx={{width:"15%"}} component="th" scope="row" align="center">
+                    {ad?.room?.images[0]?(
+                    <img className="img"  src={ad?.room?.images[0]} alt="" />):(<img className="img"  src={Photo} alt="" />)
+                  }
                   </StyledTableCell>
 
                   <StyledTableCell component="th" scope="row" align="center">
@@ -435,9 +446,9 @@ export default function Ads() {
                         onClick={() => showDeleteModel(ad?._id)}
                         color="error"
                       />{" "}
-                      <UpdateIcon
+                      <EditIcon
                         onClick={() => showUpdateModel(ad)}
-                        sx={{ color: grey[300] }}
+                        sx={{ color: grey[30] }}
                       />{" "}
                     </span>
                   </StyledTableCell>
@@ -445,17 +456,17 @@ export default function Ads() {
               ))}
             </TableBody>
           </Table>
-        <Stack sx={{bgcolor:"cornflowerblue"}}>
-        <TablePagination 
-            rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-            colSpan={6}
-            count={arrayOfPages.length} // Update this line
-            rowsPerPage={rowsPerPage}
-            page={currentPage - 1}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Stack>
+          <Stack sx={{ bgcolor: "cornflowerblue" }}>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+              colSpan={6}
+              count={arrayOfPages.length} // Update this line
+              rowsPerPage={rowsPerPage}
+              page={currentPage - 1}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Stack>
         </TableContainer>
       </Box>
     </>

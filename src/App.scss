@@ -44,14 +44,14 @@ $textColor: #eb5148;
 }
 
 //*****************     Ads     ******************************************************************************************//
-.bg {
-  background-image: url(./assets/images.jpg);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+
+.img{
+  width: 80%;
+  border-radius: 10px;
 }
 .bg1 {
-  background-color: rgba(119, 152, 163, 0.5);
-  border-radius: 20px;
+  background-color:rgb(210 217 244)!important;
+  border-radius: 25px !important;
 }
 .bg2 {
   background-image: url(./assets/see.jpg);
@@ -59,11 +59,7 @@ $textColor: #eb5148;
   background-size: 100% 100%;
   border-radius: 20px;
 }
-.bg5 {
-  background-image: url(./assets/السياحة_في_مصر.jpg);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
+
 .long {
   width: 75%;
   margin: auto;
@@ -77,8 +73,8 @@ $textColor: #eb5148;
   border-radius: 20px;
 }
 .bg4 {
-  background-color: #3252df !important;
-  color: antiquewhite;
+  background-color:$logoColor1!important;
+  color: #fff;
 }
 .bg6 {
   background-color: #eb5148;

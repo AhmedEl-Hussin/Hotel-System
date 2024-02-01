@@ -17,7 +17,7 @@ import { useContext } from "react";
 import Users from "./Components/Users/Users";
 import Rooms from "./Components/Rooms/Rooms";
 import Ads from "./Components/Ads/Ads";
-import AddNewAds from "./Components/AddNewAds/AddNewAds";
+import AddNewAds from "./Components/AddNewAds/AddNewAds.jsx";
 import Bookings from "./Components/Bookings/Bookings";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -37,8 +37,8 @@ function App() {
         { path: "users", element: <Users /> },
         { path: "rooms", element: <Rooms /> },
         { path: "ads", element: <Ads /> },
+        { path: "add-new-add", element: <AddNewAds /> },
         { path: "booking", element: <Bookings /> },
-        { path: "new", element: <AddNewAds /> },
       ],
     },
     {
